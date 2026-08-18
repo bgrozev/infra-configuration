@@ -69,6 +69,18 @@
     regexp: '^#ENABLE_LETSENCRYPT='
     line: "ENABLE_LETSENCRYPT=0"
 
+- name: Set enableIceRestart
+  ansible.builtin.lineinfile:
+    path: /home/jcompose/docker-jitsi-meet/.env
+    regexp: '^#?ENABLE_ICE_RESTART='
+    line: "ENABLE_ICE_RESTART={{ jitsi_meet_enable_ice_restart | default(false) | lower }}"
+
+- name: Set enableIceRestartOnNetworkChange
+  ansible.builtin.lineinfile:
+    path: /home/jcompose/docker-jitsi-meet/.env
+    regexp: '^#?ENABLE_ICE_RESTART_ON_NETWORK_CHANGE='
+    line: "ENABLE_ICE_RESTART_ON_NETWORK_CHANGE={{ jitsi_meet_enable_ice_restart_on_network_change | default(false) | lower }}"
+
 # flush force_handlers:
 - name: Flush handlers for .env file completion
   ansible.builtin.meta: flush_handlers
